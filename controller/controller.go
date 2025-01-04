@@ -5,20 +5,16 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/imran4u/movie-api/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-// should be in config file
-const connectionString = "mongodb+srv://erimran4u:imran123@movieclustor0.eumdv.mongodb.net/?retryWrites=true&w=majority&appName=movieclustor0"
-const dbName = "netflix"
-const colName = "watchlist"
 
 // collection
 var collection *mongo.Collection
 
 func init() {
-	clientOption := options.Client().ApplyURI(connectionString)
+	clientOption := options.Client().ApplyURI(config.ConnectionString)
 
 	// connect to mondo db
 	client, err := mongo.Connect(context.TODO(), clientOption)
@@ -27,6 +23,6 @@ func init() {
 	}
 	fmt.Println("Mongo db connection success")
 
-	collection = client.Database(dbName).Collection(colName)
+	collection = client.Database(config.DbName).Collection(config.ColName)
 	fmt.Println("collection Ref is ready")
 }
